@@ -1,0 +1,68 @@
+Public Sub lsEnviarWhatsApp()
+    Dim lUltimaLinha As Long
+    Dim lContato As String
+    Dim lMensagem As String
+    
+    'Abre o WhatsApp
+    Shell "C:\Program Files\Google\Chrome\Application\chrome.exe" & " https://web.whatsapp.com/"
+    
+    Application.Wait Now + TimeValue("00:00:15")
+    
+        lUltimaLinha = WhatsApp.Cells(WhatsApp.Rows.Count, 2).End(xlUp).Row
+        
+    'Faz o loop pelas linhas da tabela
+    
+    For i = 7 To lUltimaLinha
+        If WhatsApp.Cells(i, 4).Value = "" Then
+            lContato = WhatsApp.Cells(i, 2).Value
+            lMensagem = WhatsApp.Cells(i, 3).Value
+            
+            SendKeys "{TAB}"
+            SendKeys "{TAB}"
+            SendKeys "{TAB}"
+            SendKeys "{TAB}"
+            SendKeys "{TAB}"
+            SendKeys "{TAB}"
+            Application.Wait Now + TimeValue("00:00:10")
+             
+                SendKeys lContato
+                Application.Wait Now + TimeValue("00:00:08")
+                
+                SendKeys "~"
+                Application.Wait Now + TimeValue("00:00:09")
+                
+                SendKeys lMensagem
+                
+    
+    'WhatsApp Imagem
+        WhatsApp.Range("Imagem01").CopyPicture , xlBitmap
+        Application.Wait Now + TimeValue("00:00:08")
+        
+        SendKeys "^v"
+        Application.Wait Now + TimeValue("00:00:06")
+        SendKeys "~"
+        Application.Wait Now + TimeValue("00:00:05")
+        
+            SendKeys "{TAB}"
+                        Application.Wait Now + TimeValue("00:00:08")
+            SendKeys "{TAB}"
+                        Application.Wait Now + TimeValue("00:00:08")
+            SendKeys "{TAB}"
+                        Application.Wait Now + TimeValue("00:00:08")
+            SendKeys "{TAB}"
+                        Application.Wait Now + TimeValue("00:00:08")
+            SendKeys "{TAB}"
+                        Application.Wait Now + TimeValue("00:00:08")
+            SendKeys "{TAB}"
+                        Application.Wait Now + TimeValue("00:00:08")
+                        
+            WhatsApp.Cells(i, 4).Value = Now
+        
+        End If
+            
+    
+    Next i
+    
+    MsgBox "Mensagens Enviadas"
+
+End Sub
